@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <%- include('partials/head', { title: 'Beranda' }) %>
+</head>
+<body>
+  <%- include('partials/navbar', { active: 'beranda' }) %>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">Sembako &amp; kebutuhan rumah tangga</p>
+        <h1>Belanja pokok<br />tanpa nunggu balesan WA.</h1>
+        <p class="hero-lead">
+          Beras, minyak, gula, telur — stok dan harga selalu update. Ada pertanyaan?
+          Tinggal tanya lewat fitur Tanya AI, gak perlu nunggu Ibu Aries bales chat.
+        </p>
+        <a href="/produk" class="btn-primary">Lihat semua produk</a>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="produk-pilihan-heading">
+      <div class="section-inner">
+        <h2 id="produk-pilihan-heading">Produk pilihan</h2>
+        <div class="product-grid">
+          <% produkPilihan.forEach(function(p) { %>
+            <article class="product-card">
+              <div class="price-tag" aria-hidden="true">
+                Rp<%= p.price.toLocaleString('id-ID') %>
+              </div>
+              <p class="product-category"><%= p.category %></p>
+              <h3><a href="/produk/<%= p.id %>"><%= p.name %></a></h3>
+              <p class="product-stock">Stok: <%= p.stock %></p>
+            </article>
+          <% }); %>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>
