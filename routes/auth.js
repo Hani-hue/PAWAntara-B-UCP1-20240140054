@@ -24,3 +24,4 @@ router.post('/logout', (req, res) => {
     res.json({ status: 'success', message: 'Logout berhasil' });
   });
 });
+module.exports = router;
