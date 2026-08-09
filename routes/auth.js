@@ -19,3 +19,8 @@ router.post('/login', (req, res) => {
   res.json({ status: 'success', message: 'Login berhasil' });
 });
 
+router.post('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.json({ status: 'success', message: 'Logout berhasil' });
+  });
+});
