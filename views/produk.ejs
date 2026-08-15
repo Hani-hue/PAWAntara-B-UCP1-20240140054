@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <%- include('partials/head', { title: 'Produk' }) %>
+</head>
+<body>
+  <%- include('partials/navbar', { active: 'produk' }) %>
+
+  <main>
+    <section class="section">
+      <div class="section-inner">
+        <h1>Semua Produk</h1>
+
+        <form id="filter-form" method="GET" class="filter-form" aria-label="Filter produk">
+          <div class="filter-field">
+            <label for="search">Cari nama produk</label>
+            <input type="text" id="search" name="search" placeholder="contoh: beras" />
+          </div>
+          <div class="filter-field">
+            <label for="kategori">Kategori</label>
+            <select id="kategori" name="kategori">
+              <option value="">Semua kategori</option>
+              <% kategoriList.forEach(function(k) { %>
+                <option value="<%= k %>"><%= k %></option>
+              <% }); %>
+            </select>
+          </div>
+          <button type="submit" class="btn-primary">Terapkan</button>
+        </form>
+
+        <p id="produk-empty" class="empty-state" hidden>Gak ada produk yang cocok. Coba kata kunci lain.</p>
+        <div class="product-grid" id="produk-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>
+  <script src="/js/produk.js"></script>
+</body>
+</html>
