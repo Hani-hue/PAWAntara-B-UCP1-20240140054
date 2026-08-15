@@ -1,60 +1,39 @@
 const express = require('express');
 const path = require('path');
-const products = require('./data/products');
+const session = require('express-session');
+
+const pagesRouter = require('./routes/pages');
+const productsApiRouter = require('./routes/products');
+const authRouter = require('./routes/admin');
+const chatRouter = require('./routes/chat');
+const logger = require('./middleware/logger');
 
 const app = express();
 
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// FR-08: middleware custom — request logger
+app.use(session({
+  secret: 'ariesta-secret-key',
+  resave: false,
+  saveUninitialized: false,
+}));
+
+app.use(logger);
+
 app.use((req, res, next) => {
-  console.log(`[${new Date().toLocaleTimeString('id-ID')}] ${req.method} ${req.url}`);
+  res.locals.loggedIn = Boolean(req.session.user);
   next();
 });
 
-// Beranda — hero + preview produk
-app.get('/', (req, res) => {
-  res.render('index', { produkPilihan: products.slice(0, 4) });
-});
+app.use('/', pagesRouter);
+app.use('/api/products', productsApiRouter);
+app.use('/api', authRouter);
+app.use('/api', chatRouter);
 
-// Produk — daftar + filter lewat query string (?kategori= / ?search=)
-app.get('/produk', (req, res) => {
-  const { kategori, search } = req.query;
-  let hasil = products;
+const PORT = process.env.PORT || 3000;
 
-  if (kategori) {
-    hasil = hasil.filter((p) => p.category.toLowerCase() === kategori.toLowerCase());
-  }
-  if (search) {
-    hasil = hasil.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
-  }
-
-  const kategoriList = [...new Set(products.map((p) => p.category))];
-
-  res.render('produk', {
-    produk: hasil,
-    kategoriList,
-    kategoriAktif: kategori || '',
-    searchAktif: search || '',
-  });
-});
-
-// Detail produk — route dinamis, tangani ID tidak ditemukan tanpa crash
-app.get('/produk/:id', (req, res) => {
-  const produk = products.find((p) => p.id === Number(req.params.id));
-  res.render('produk-detail', { produk });
-});
-
-// Tanya AI — tampilan chat + form (logic balasan baru di Sprint 2)
-app.get('/tanya-ai', (req, res) => {
-  res.render('tanya-ai');
-});
-
-// REST API read-only, fondasi buat CRUD penuh di Sprint 2
-app.get('/api/products', (req, res) => {
-  res.json({ status: 'success', data: products });
-});
-
-const PORT = 3000;
+// Langsung jalankan server tanpa sequelize.sync()
 app.listen(PORT, () => console.log(`Server jalan di http://localhost:${PORT}`));
