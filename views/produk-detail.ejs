@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <%- include('partials/head', { title: produk ? produk.name : 'Produk tidak ditemukan' }) %>
+</head>
+<body>
+  <%- include('partials/navbar', { active: 'produk' }) %>
+
+  <main>
+    <section class="section">
+      <div class="section-inner section-narrow">
+        <a href="/produk" class="back-link">&larr; Kembali ke semua produk</a>
+
+        <% if (!produk) { %>
+          <article class="empty-state">
+            <h1>Produk tidak ditemukan</h1>
+            <p>ID produk yang kamu cari gak ada di daftar kami. Coba cek lagi daftar produk.</p>
+          </article>
+        <% } else { %>
+          <article class="product-detail">
+            <div class="price-tag price-tag-lg" aria-hidden="true">
+              Rp<%= produk.price.toLocaleString('id-ID') %>
+            </div>
+            <p class="product-category"><%= produk.category %></p>
+            <h1><%= produk.name %></h1>
+            <dl class="product-meta">
+              <div>
+                <dt>Harga</dt>
+                <dd>Rp<%= produk.price.toLocaleString('id-ID') %></dd>
+              </div>
+              <div>
+                <dt>Stok tersedia</dt>
+                <dd><%= produk.stock %> unit</dd>
+              </div>
+            </dl>
+          </article>
+        <% } %>
+      </div>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>
