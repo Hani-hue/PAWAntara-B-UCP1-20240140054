@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <%- include('partials/head', { title: 'Tanya AI' }) %>
+</head>
+<body>
+  <%- include('partials/navbar', { active: 'tanya-ai' }) %>
+
+  <main>
+    <section class="section">
+      <div class="section-inner section-narrow">
+        <h1>Tanya AI</h1>
+        <p class="hero-lead">Ada pertanyaan soal jam buka, ongkir, atau stok? Tanya di sini.</p>
+
+        <section class="chat-window" id="chat-window" aria-label="Riwayat chat">
+          <article class="chat-bubble chat-bubble-ai">
+            <p>Halo! Tanya soal jam buka, ongkir, cara pembayaran, atau stok ya.</p>
+          </article>
+        </section>
+
+        <form id="chat-form" class="chat-form" aria-label="Form tanya AI">
+          <label for="pertanyaan">Pertanyaan kamu</label>
+          <textarea id="pertanyaan" name="pertanyaan" rows="3" placeholder="contoh: gula sekilo berapa?" required></textarea>
+          <button type="submit" class="btn-primary">Kirim</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>
+  <script src="/js/chat.js"></script>
+</body>
+</html>
