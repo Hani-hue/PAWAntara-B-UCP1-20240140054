@@ -223,14 +223,40 @@ h1 { font-size: 2.1rem; line-height: 1.1; margin-bottom: 1rem; }
 .chat-bubble-user { background: var(--green); color: white; margin-left: auto; }
 
 /* ---------- Footer ---------- */
-.site-footer { border-top: 1px solid var(--card-border); margin-top: 2rem; }
-.footer-inner { max-width: 72rem; margin: 0 auto; padding: 1.5rem 1.25rem; font-size: 0.85rem; color: #6b6255; display: flex;  align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
-
+.site-footer { margin-top: 2rem; }
+.footer-inner { 
+  max-width: 72rem; 
+  margin: 0 auto; 
+  padding: 1.5rem 1.25rem; 
+  font-size: 0.85rem; 
+  color: #6b6255; 
+  display: flex; 
+  align-items: center; 
+  justify-content: flex-start; /* Mengatur isi flex ke sebelah kiri */
+  flex-wrap: wrap; 
+  gap: 0.5rem; 
+  border-top: 1px solid var(--card-border); 
+}
 /* ---------- Breakpoints (mobile-first: 2 breakpoint) ---------- */
+/*ini buat tablet kecil atau perangkat dengan lebar kurang lebih sama dengan  640 pikse*/
 @media (min-width: 640px) {
   .product-grid { grid-template-columns: repeat(2, 1fr); }
+/**/
 }
 
+/* --- Tampilan HP/Layar Kecil (Max 639px) --- */
+@media (max-width: 639px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0.75rem 1.25rem;
+    gap: 0.2rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* --- Tampilan Desktop/Layar Besar (Min 768px) --- */
 @media (min-width: 768px) {
   .hamburger { display: none; }
   .nav-menu { display: flex !important; flex-direction: row; width: auto; padding-top: 0; gap: 1.5rem; }
